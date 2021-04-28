@@ -7,24 +7,17 @@ const dscsortBtn= document.getElementById("sort-dsc")
 
 const searchInput = document.getElementById("search");
 const appState = [];
-class User{
-  constructor(title,firstname,lastname,gender,email){
-  this.name = `${title} ${firstname} ${lastname}`
-  this.gender = gender
-  this.email = email
-  }
-}
+
 addUser.addEventListener("click", async () => {
   const userData = await fetch(api, {
     method: "GET"
   });
 
   const userJson = await userData.json();
-  // console.log(userJson.results[0])
   const user = userJson.results[0];
   const classUser = new User(user.name.title, user.name.first, user.name.last, user.gender, user.email)
   appState.push(classUser);
-  console.log(appState);
+
   domRenderer(appState);
 });
 const domRenderer = (stateArr) => {
@@ -63,3 +56,10 @@ dscsortBtn.addEventListener("click", ()=>{
    appStateCopy.sort((a,b)=>a.name>b.name?-1:1)
    domRenderer(appStateCopy)
  })
+ class User{
+  constructor(title,firstname,lastname,gender,email){
+  this.name = `${title} ${firstname} ${lastname}`
+  this.gender = gender
+  this.email = email
+  }
+}
